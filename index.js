@@ -15,7 +15,10 @@ const app = express()
 //use() ia a middleware to accept body 
 app.use(express.json())
 app.use(cors({
-  origin: 'http://localhost:5173', // allow my frontend origin
+  //origin: 'http://localhost:5173', // allow my frontend origin
+   origin:"https://phnnes-travel-agency.vercel.app",
+   methods:["Post","Gets"],
+   credentials:true,
 }));
 
  let users = []
