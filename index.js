@@ -15,10 +15,9 @@ const app = express()
 //use() ia a middleware to accept body 
 app.use(express.json())
 app.use(cors({
-  //origin: 'http://localhost:5173', // allow my frontend origin
-   origin:"https://phnnes-travel-agency.vercel.app",
-   methods:["Post","Gets"],
-   credentials:true,
+  origin: 'http://localhost:5173', // allow my frontend origin
+  
+   
 }));
 
  let users = []
@@ -206,7 +205,7 @@ app.post("/book", async (req, res) => {
 
 
 mongoose.connect(process.env.DataBase_Host,{
-    serverSelectionTimeoutMS:5000 
+    serverSelectionTimeoutMS:Server_Port,
 })
 
 .then(()=>{console.log("connected with DB");
