@@ -26,6 +26,9 @@ app.use("/", testRoutes);
 const bookingRoutes = require("./routes/bookingRoutes.js")
 app.use("/" ,bookingRoutes);
 
+const contactRoutes = require("./routes/contactRoutes.js")
+app.use("/" ,contactRoutes)
+
 
 //---------------------connect to db ----
 

@@ -75,10 +75,7 @@ const signRefreshToken = (user) =>
     expiresIn: REFRESH_EXPIRES,
   });
 
-// In production, frontend and backend live on different domains
-// (Vercel + Render), so the cookie must be sameSite: "none" + secure: true
-// to survive cross-site requests. Locally (same origin, plain http),
-// "lax" + non-secure keeps working exactly as it did during testing.
+
 const isProd = process.env.NODE_ENV === "production";
 
 const refreshCookieOptions = {
