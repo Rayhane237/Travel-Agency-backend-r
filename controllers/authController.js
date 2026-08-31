@@ -65,7 +65,7 @@ const REFRESH_COOKIE_MAX_AGE = 7 * 24 * 60 * 60 * 1000;
 
 const signAccessToken = (user) =>
   jwt.sign(
-    { userId: user._id, userName: user.fullName },
+    { userId: user._id, userName: user.fullName  , role: user.role},
     process.env.JWT_ACCESS_SECRET,
     { expiresIn: ACCESS_EXPIRES }
   );

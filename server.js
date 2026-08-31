@@ -2,11 +2,15 @@ require("dotenv").config()
 const express  = require("express")
 const mongoose = require("mongoose")
 const cors     = require("cors")
+const helmet   = require("helmet");
+const morgan    = require("morgan");
 const cookieParser = require("cookie-parser");
 
 const app = express()
-
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin"}));
+app.use(morgan());
 app.use(cookieParser());
+
 app.use(cors({
   origin: process.env.CLIENT_URL,
   credentials: true,
@@ -30,6 +34,22 @@ const contactRoutes = require("./routes/contactRoutes.js")
 app.use("/" ,contactRoutes)
 
 
+//---------------------admin routes ---------------------
+const adminUserRoutes = require("./adminRoutes/user.js")
+app.use("/api/admin" ,adminUserRoutes);
+
+const adminFlightRoutes = require("./adminRoutes/flight.js")
+app.use("/api/admin" ,adminFlightRoutes);
+
+const adminHotelRoutes = require("./adminRoutes/hotel.js")
+app.use("/api/admin" ,adminHotelRoutes);
+
+const adminMessageRoutes = require("./adminRoutes/message.js")
+app.use("/api/admin" ,adminMessageRoutes);
+
+app.get("/api/admin/test123", (req, res) => {
+  res.json({ ok: true });
+});
 //---------------------connect to db ----
 
 mongoose.connect(process.env.MONGO_URI)

@@ -1,4 +1,4 @@
-const Book = require("../models/Book");
+const Book = require("../models/flightBooking");
 const HotelBooking = require("../models/HotelBooking");
 
 //---------------------validate booking flight----//
