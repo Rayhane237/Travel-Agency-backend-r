@@ -11,9 +11,12 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin"}));
 app.use(morgan());
 app.use(cookieParser());
 
+//---------------------cors---------------------
+const allowedOrigins = [ process.env.CLIENT_URL, process.env.ADMIN_CLIENT_URL];
+
 app.use(cors({
-  origin: process.env.CLIENT_URL,
-  credentials: true,
+  origin: allowedOrigins,
+  credentials :true,
 }));
 
 app.use(express.json())
@@ -46,6 +49,9 @@ app.use("/api/admin" ,adminHotelRoutes);
 
 const adminMessageRoutes = require("./adminRoutes/message.js")
 app.use("/api/admin" ,adminMessageRoutes);
+
+const adminStatCardsRoutes = require("./adminRoutes/statCards.js")
+app.use("/api/admin" , adminStatCardsRoutes);
 
 app.get("/api/admin/test123", (req, res) => {
   res.json({ ok: true });

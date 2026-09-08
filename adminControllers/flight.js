@@ -1,4 +1,4 @@
-const BookFlight = require('../models/flightBooking');
+const BookFlight = require('../models/FlightBooking');
 
 //-----------------------------get all flight bookings ----------------------------
 const getAllFlightBookings = async(req , res) => {

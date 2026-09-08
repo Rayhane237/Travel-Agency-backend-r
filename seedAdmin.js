@@ -11,15 +11,15 @@ const run = async ()=>{
         
           return;
         }
-    const admin = await User.findByIdAndUpdate(
-        {email},
-        { role:"admin"},
-        {new:true}
+    const admin = await User.findOneAndUpdate(
+        { email },
+        { role:"admin" },
+        { new:true }
     );
 
  console.log(admin ? `Promoted ${admin.email} to admin` : "User not found");
   await mongoose.disconnect();
+  
+};
 
  run();
-
-};

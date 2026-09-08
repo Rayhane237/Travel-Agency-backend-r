@@ -96,13 +96,13 @@ const login = async(req,res)=>{
    const user = await User.findOne({email:email}).select("+password")
   
    if(!user){
-      return  res.status(400).json({message:" invalid credentials "})
+      return  res.status(400).json({message:" invalid credentials email not found "})
    }
 
    //verify if password correct 
    const isPasswordValid = await bcrypt.compare(password,user.password)
     if(!isPasswordValid){
-       return  res.status(400).json({message:"invalid credentials "})
+       return  res.status(400).json({message:"invalid credentials password is incorrect "})
     }
    
     //tokens
@@ -122,6 +122,7 @@ const login = async(req,res)=>{
          _id:user._id ,
          fullName:user.fullName,
          email:user.email,
+         role:user.role,
       },
       accessToken
    })
@@ -167,7 +168,7 @@ const refreshToken = async (req, res) => {
     await user.save();
 
     res.cookie("refreshToken", newRefreshToken, refreshCookieOptions);
-    res.status(200).json({ accessToken: newAccessToken });
+    res.status(200).json({ accessToken: newAccessToken ,role: user.role });
   } catch (err) {
     res.clearCookie("refreshToken", { path: "/refresh-token" });
     res.status(401).json({ message: "session expired" });
