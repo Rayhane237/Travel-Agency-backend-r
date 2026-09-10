@@ -15,4 +15,4 @@ const bookSchema = new mongoose.Schema({
 
  );
 
-module.exports = mongoose.model("flightBooking", bookSchema);
+module.exports = mongoose.models.FlightBooking || mongoose.model("FlightBooking", bookSchema);
