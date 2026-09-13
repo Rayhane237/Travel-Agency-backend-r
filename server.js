@@ -41,8 +41,8 @@ app.use("/" ,contactRoutes)
 const adminUserRoutes = require("./adminRoutes/user.js")
 app.use("/api/admin" ,adminUserRoutes);
 
-const adminFlightRoutes = require("./adminRoutes/flight.js")
-app.use("/api/admin" ,adminFlightRoutes);
+const adminFlightBookingRoutes = require("./adminRoutes/booking/flight.js")
+app.use("/api/admin" ,adminFlightBookingRoutes);
 
 const adminHotelRoutes = require("./adminRoutes/hotel.js")
 app.use("/api/admin" ,adminHotelRoutes);
@@ -52,6 +52,13 @@ app.use("/api/admin" ,adminMessageRoutes);
 
 const adminStatCardsRoutes = require("./adminRoutes/statCards.js")
 app.use("/api/admin" , adminStatCardsRoutes);
+
+const adminFlightListingRoutes = require("./adminRoutes/listing/flight.js")
+app.use("/api/admin" , adminFlightListingRoutes);
+
+const adminHotelListingRoutes = require("./adminRoutes/listing/hotel.js")
+app.use("/api/admin" , adminHotelListingRoutes);
+
 
 app.get("/api/admin/test123", (req, res) => {
   res.json({ ok: true });
