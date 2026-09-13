@@ -1,2 +1,23 @@
-/node_modules
+# dependencies
+node_modules/
+
+# environment variables
 .env
+.env.local
+.env.*.local
+
+# build output
+dist/
+build/
+
+# logs
+*.log
+npm-debug.log*
+
+# editor/OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# vite cache
+.vite/
