@@ -50,7 +50,7 @@ const updateFlightListing = async(req , res) => {
         if(!updatedListing) {
             return res.status(404).json({message: "Listing not found"})
         }
-        res.status(200).json({message:"Flight listing updated successfully"});
+        res.status(200).json({message:"Flight listing updated successfully"  ,data:updatedListing});
 
     }catch(err) {
         console.log("Error updating flight listing:" , err);

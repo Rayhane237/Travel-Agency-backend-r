@@ -5,12 +5,12 @@ const HotelListing = require("../../models/HotelListing");
 //-------------------------- create hotel listing ------------------------
 const createHotelListing = async(req,res) => {
  try{
-    const { image ,price ,description ,destination} = req.body;
-    if( !image || !price || !description || !destination){
+    const { image ,price ,description ,hotelName} = req.body;
+    if( !image || !price || !description || !hotelName){
         return res.status(400).json({message:"Hotel listing not found"});
     }
     const newListing = new HotelListing({
-        destination,
+        hotelName,
         image,
         price,
         description
