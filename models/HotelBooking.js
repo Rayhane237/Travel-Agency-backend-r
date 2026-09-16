@@ -1,10 +1,15 @@
 const mongoose = require("mongoose");
 
 const bookHotelSchema = new mongoose.Schema({
-  hotelName:      { type: String, required: true },
-  checkIn:        { type: Date , required: true },
-  checkOut:      { type: Date,   required: true },
-  guestName: { type: String, required: true },
+  price:    { type:Number , required: true},
+  checkIn:  { type: Date, required: true },
+  checkOut: { type: Date, required: true },
+  guestName:{ type: String, required: true },
+  listing:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"HotelListing",
+    required:true,
+  },
   //user is a reference to the User model, allowing us to associate a booking with a specific user
   user :{
      type:mongoose.Schema.Types.ObjectId,
@@ -14,5 +19,4 @@ const bookHotelSchema = new mongoose.Schema({
 }, { timestamps: true, }
 
  );
-
-module.exports = mongoose.model("HotelBooking", bookHotelSchema);
+module.exports = mongoose.models.HotelBooking || mongoose.model("HotelBooking", bookHotelSchema);

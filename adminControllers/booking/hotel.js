@@ -3,7 +3,9 @@ const BookHotel = require("../../models/HotelBooking");
 const getAllHotelBookings = async(req,res) =>{
   try{
 
-   const bookings = await BookHotel.find().populate("user" ,"fullName email");
+   const bookings = await BookHotel.find()
+   .populate("listing" , "-description")
+   .populate("user" ,"fullName email");
     res.status(200).json({message:"All hotel bookings retrieved successfully", data:bookings})
   
   }catch(err){

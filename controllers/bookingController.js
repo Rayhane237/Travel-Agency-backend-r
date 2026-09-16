@@ -1,24 +1,23 @@
 const Book = require("../models/FlightBooking");
+const FlightListing = require("../models/FlightListing");
 const HotelBooking = require("../models/HotelBooking");
+const HotelListing = require("../models/HotelListing");
 
 //---------------------validate booking flight----//
 const bookFlight = async (req, res) => {
   try {
-    const { from, to, date, passenger } = req.body;
-
-    if (!from || !to || !date || !passenger) {
+    const { date, passenger ,listing } = req.body;
+     if (!date || !passenger || !listing) {
       return res.status(400).json({ message: "Missing booking credentials" });
-    }
-
-    const existingBooking = await Book.findOne({ passenger, from, to, date });
-    if (existingBooking) {
-      return res.status(400).json({ message: "This flight is already booked" });
-    }
-
+     }
+    const foundListing = await FlightListing.findById(listing)
+       if(!foundListing){
+            return res.status(404).json({messages:"flight listing does not exist"})
+     }
     const newBooking = new Book({
-      from,
-      to,
       date,
+      listing,
+      price: foundListing.price ,
       passenger,
       user: req.user.userId // Associate the booking with the authenticated user
     });
@@ -34,26 +33,27 @@ const bookFlight = async (req, res) => {
   }
 };
 
-//--------------------------BookHotel----------------
+//--------------------------BookHotel----------------------------------------------------------------------------
 const bookHotel = async (req,res) => {
 try{
-  const {hotelName ,checkIn , checkOut ,guestName } = req.body;
+  const {checkIn , checkOut ,guestName ,listing } = req.body;
 
-  if(!hotelName || !checkIn || !checkOut || !guestName ){
+  if( !listing || !checkIn || !checkOut || !guestName ){
            return res.status(400).json({ message: "Missing booking credentials" });
   }
 
-  const existingBooking = await HotelBooking.findOne({ hotelName, checkIn ,checkOut ,guestName})
-  if(existingBooking){
-          return res.status(400).json({ message: "This hotel is already booked" });
+  const foundListing = await HotelListing.findById( listing);
+  if( !foundListing ){
+          return res.status(404).json({ message: "This hotel list does not exist" });
   }
 
   const newBooking = new HotelBooking({
-    hotelName,
     checkIn,
     checkOut,
     guestName,
-    user:req.user.userId 
+    listing,
+    user:req.user.userId ,
+    price: foundListing.price,
   })
   await newBooking.save();
 

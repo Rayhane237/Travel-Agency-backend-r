@@ -10,4 +10,5 @@ const listingSchema = new mongoose.Schema({
   description:{ type:String, required:true},
   isActive:   { type:Boolean, default:true},
 } , { timestamps: true, })
+
 module.exports = mongoose.models.FlightListing || mongoose.model("FlightListing", listingSchema);

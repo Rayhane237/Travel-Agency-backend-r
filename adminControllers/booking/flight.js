@@ -3,7 +3,9 @@ const BookFlight = require('../../models/FlightBooking');
 //-----------------------------get all flight bookings ----------------------------
 const getAllFlightBookings = async(req , res) => {
     try{
-        const bookings = await BookFlight.find().populate("user" , "fullName email");
+        const bookings = await BookFlight.find()
+        .populate("user" , "fullName email")
+        .populate("listing", "-description");
         res.status(200).json({message:"All flight bookings retrieved successfully", data:bookings})
 
     }catch(err){
