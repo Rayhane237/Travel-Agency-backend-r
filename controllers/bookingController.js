@@ -1,3 +1,4 @@
+const FlightBooking = require("../models/FlightBooking");
 const Book = require("../models/FlightBooking");
 const FlightListing = require("../models/FlightListing");
 const HotelBooking = require("../models/HotelBooking");
@@ -21,7 +22,8 @@ const bookFlight = async (req, res) => {
       passenger,
       user: req.user.userId // Associate the booking with the authenticated user
     });
-    await newBooking.save();
+    await newBooking.save(); //save the booking to the db first
+    await newBooking.populate("listing" ,"-description")//once it's saved in db i call mongoose to fetch it
 
     res.status(201).json({
       message: "Flight booked successfully",
@@ -32,6 +34,20 @@ const bookFlight = async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 };
+
+//-------------------------------------get my flight bookings----------------------------
+const getMyFlightBookings = async(req,res) => {
+  try{
+    const myBookings = await FlightBooking.find({ user:req.user.userId }).populate("listing" ,"-description");
+    res.status(200).json({message:"all my flight bookings retrieved" , data:myBookings })
+   
+  } catch (err) {
+    console.error("error in my bookings:", err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+}
+
+
 
 //--------------------------BookHotel----------------------------------------------------------------------------
 const bookHotel = async (req,res) => {
@@ -56,6 +72,7 @@ try{
     price: foundListing.price,
   })
   await newBooking.save();
+  await newBooking.populate("listing" ,"-description")
 
     res.status(201).json({
       message: "Hotel booked successfully",
@@ -67,5 +84,16 @@ try{
   }
 };
 
+//---------------------------------get my hotel bookings------------------
+const getMyHotelBookings = async(req,res) => {
+  try{
+    const myBookings = await HotelBooking.find({user:req.user.userId}).populate("listing" ,"-description");
+    res.status(200).json({message:"My hotel bookings retrieved successfully" , data:myBookings });
+  } catch (err) {
+    console.error("BOOKING error:", err);
+    res.status(500).json({ message: "Something went wrong" });
+  }
+}
 
-module.exports = { bookFlight ,bookHotel };
+
+module.exports = { bookFlight ,bookHotel  , getMyFlightBookings , getMyHotelBookings};
